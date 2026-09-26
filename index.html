@@ -48,6 +48,10 @@
             column-gap: 1.25rem;
         }
 
+        .masonry-grid.layout-single { column-count: 1; }
+        .masonry-grid.layout-double { column-count: 2; }
+        .masonry-grid.layout-triple { column-count: 3; }
+
         @media (min-width: 640px) {
             .masonry-grid { column-count: 2; }
         }
@@ -136,6 +140,10 @@
             pointer-events: auto;
         }
 
+        .mobile-view-toggle {
+            display: none;
+        }
+
         @media (max-width: 640px) {
             #navbar {
                 border-bottom-color: rgba(159, 18, 57, 0.12);
@@ -143,6 +151,33 @@
 
             #navbar .h-20 {
                 height: 4.5rem;
+            }
+
+            .mobile-view-toggle {
+                position: fixed;
+                top: 0.9rem;
+                right: 0.8rem;
+                z-index: 60;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mobile-view-toggle button {
+                width: 2.1rem;
+                height: 2.1rem;
+                border-radius: 9999px;
+                border: 1px solid rgba(159, 18, 57, 0.22);
+                background: rgba(255, 255, 255, 0.88);
+                color: #4c0519;
+                font-size: 0.8rem;
+                font-weight: 700;
+                box-shadow: 0 8px 20px rgba(76, 5, 25, 0.12);
+                transition: all 0.25s ease;
+            }
+
+            .mobile-view-toggle button:active {
+                transform: scale(0.96);
             }
 
             #mariangelaTitle {
@@ -205,7 +240,7 @@
 <body class="font-body antialiased selection:bg-brand selection:text-white">
 
     <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-brand-light/50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div class="flex justify-center items-center h-20">
                 <a href="#" id="mariangelaTitle" class="text-4xl md:text-5xl font-romantic text-brand hover:text-brand-dark transition-colors duration-300 cursor-pointer select-none">
                     Mariangela
@@ -213,6 +248,10 @@
             </div>
         </div>
     </nav>
+
+    <div class="mobile-view-toggle" aria-label="Alternar visualização da galeria">
+        <button id="layoutToggle" type="button" title="Alternar visualização" aria-label="Alternar visualização da galeria">3</button>
+    </div>
 
     <div id="secretMessage" class="secret-message fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
         <div class="bg-white/90 border border-brand-light rounded-3xl px-8 py-6 shadow-[0_25px_80px_rgba(159,18,57,0.18)] max-w-md text-center">
@@ -400,8 +439,28 @@
     <script>
         const mariangelaTitle = document.getElementById('mariangelaTitle');
         const secretMessage = document.getElementById('secretMessage');
+        const layoutToggle = document.getElementById('layoutToggle');
+        const gallery = document.getElementById('gallery');
         let clickCount = 0;
         let secretTimeout;
+        let activeLayout = 2;
+
+        const galleryLayouts = ['layout-single', 'layout-double', 'layout-triple'];
+
+        function applyGalleryLayout(index) {
+            gallery.classList.remove('layout-single', 'layout-double', 'layout-triple');
+            gallery.classList.add(galleryLayouts[index]);
+            layoutToggle.textContent = index + 1;
+            layoutToggle.title = `Visualização de ${index + 1} coluna${index === 0 ? '' : 's'}`;
+            layoutToggle.setAttribute('aria-label', `Visualização de ${index + 1} coluna${index === 0 ? '' : 's'}`);
+        }
+
+        layoutToggle.addEventListener('click', () => {
+            activeLayout = (activeLayout + 1) % galleryLayouts.length;
+            applyGalleryLayout(activeLayout);
+        });
+
+        applyGalleryLayout(activeLayout);
 
         mariangelaTitle.addEventListener('click', (event) => {
             event.preventDefault();
