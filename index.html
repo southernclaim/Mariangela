@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariangela - Exposição de Arte</title>
+    
+    <!-- Google Fonts: Great Vibes para o nome e Lora para textos elegantes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS para estrutura e responsividade -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuração de paleta de cores no Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            light: '#ffe4e6', // Rose 200
+                            DEFAULT: '#9f1239', // Rose 800 - Vinho/Vermelho profundo
+                            dark: '#4c0519', // Rose 950
+                        }
+                    },
+                    fontFamily: {
+                        'romantic': ['"Great Vibes"', 'cursive'],
+                        'body': ['"Lora"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fffafb; /* Fundo levemente rosado/quente */
+            color: #333;
+        }
+
+        /* Estilo para a grade estilo Pinterest (Masonry) */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .masonry-grid { column-count: 2; }
+        }
+
+        @media (min-width: 1024px) {
+            .masonry-grid { column-count: 3; }
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* Efeitos de Hover nos s */
+        .masonry-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(159, 18, 57, 0.2), 0 10px 10px -5px rgba(159, 18, 57, 0.1);
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(76, 5, 25, 0.9) 0%, rgba(159, 18, 57, 0.4) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .masonry-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay-title {
+            font-family: 'Lora', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+        
+        .overlay-desc {
+            font-size: 0.875rem;
+            font-style: italic;
+            opacity: 0.8;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+            transition-delay: 0.1s;
+        }
+
+        .masonry-item:hover .overlay-title,
+        .masonry-item:hover .overlay-desc {
+            transform: translateY(0);
+        }
+        
+        /* Animação suave na imagem */
+        .masonry-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+        
+        .masonry-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .secret-message {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .secret-message.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="font-body antialiased selection:bg-brand selection:text-white">
+
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-brand-light/50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center items-center h-20">
+                <a href="#" id="mariangelaTitle" class="text-4xl md:text-5xl font-romantic text-brand hover:text-brand-dark transition-colors duration-300 cursor-pointer select-none">
+                    Mariangela
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="secretMessage" class="secret-message fixed inset-0 z-50 flex items-center justify-center bg-white/70 backdrop-blur-sm">
+        <div class="bg-white/90 border border-brand-light rounded-3xl px-8 py-6 shadow-[0_25px_80px_rgba(159,18,57,0.18)] max-w-md text-center">
+            <p class="font-romantic text-4xl md:text-5xl leading-none text-brand-dark">
+                Talvez um dia eu te conquiste &lt;3
+            </p>
+        </div>
+    </div>
+
+    <main class="pt-28 pb-16">
+        <section class="max-w-4xl mx-auto text-center px-4 mb-16 mt-8">
+            <h1 class="text-brand text-sm md:text-base font-semibold tracking-[0.2em] uppercase mb-4">
+                Exposição
+            </h1>
+            <h2 class="text-3xl md:text-4xl text-gray-800 font-light mb-6 leading-relaxed">
+                Um mergulho nas cores, sentimentos e <br class="hidden md:block">na visão de mundo através da arte.
+            </h2>
+            <div class="w-16 h-0.5 bg-brand mx-auto opacity-50"></div>
+        </section>
+
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="masonry-grid" id="gallery">
+                
+                <!--  1 -->
+                <div class="masonry-item cursor-pointer">
+                    <!-- Imagem de placeholder simulando um  abstrato -->
+                    <img src="artes/1.jpeg" alt=" Abstrato 1">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                <!--  2 -->
+                <div class="masonry-item cursor-pointer">
+                    <img src="artes/2.jpeg" alt=" Textura 2">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                <!--  3 -->
+                <div class="masonry-item cursor-pointer">
+                    <img src="artes/3.jpeg" alt=" Natureza">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                <!--  4 -->
+                <div class="masonry-item cursor-pointer">
+                    <img src="artes/4.jpeg" alt=" Detalhes">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                <!--  5 -->
+                <div class="masonry-item cursor-pointer">
+                    <img src="artes/5.jpeg" alt=" Moderno">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                <!--  6 -->
+                <div class="masonry-item cursor-pointer">
+                    <img src="artes/6.jpeg" alt=" 6">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/7.jpeg" alt=" 7">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/8.jpeg" alt=" 8">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/9.jpeg" alt=" 9">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/10.jpeg" alt=" 10">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/11.jpeg" alt=" 11">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/12.jpeg" alt=" 12">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/13.jpeg" alt=" 13">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/14.jpeg" alt=" 14">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/15.jpeg" alt=" 15">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/16.jpeg" alt=" 16">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+                                <div class="masonry-item cursor-pointer">
+                    <img src="artes/17.jpeg" alt=" 17">
+                    <div class="overlay">
+                        <h3 class="overlay-title"></h3>
+                        <p class="overlay-desc">2026</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-brand-dark text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="font-romantic text-4xl mb-4">Mariangela</h2>
+            <p class="text-sm text-brand-light/70 font-light mb-8 max-w-md mx-auto">
+            </p>
+            <div class="text-xs text-brand-light/40">
+                &copy; 2026 DoreaDev. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mariangelaTitle = document.getElementById('mariangelaTitle');
+        const secretMessage = document.getElementById('secretMessage');
+        let clickCount = 0;
+        let secretTimeout;
+
+        mariangelaTitle.addEventListener('click', (event) => {
+            event.preventDefault();
+            clickCount += 1;
+
+            if (clickCount >= 10) {
+                secretMessage.classList.add('show');
+
+                clearTimeout(secretTimeout);
+                secretTimeout = setTimeout(() => {
+                    secretMessage.classList.remove('show');
+                    clickCount = 0;
+                }, 3000);
+            }
+        });
+
+        // Efeito sutil de sombra na Navbar ao rolar a página
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-sm');
+                nav.classList.replace('py-4', 'py-2');
+            } else {
+                nav.classList.remove('shadow-sm');
+                nav.classList.replace('py-2', 'py-4');
+            }
+        });
+    </script>
+</body>
+</html>
