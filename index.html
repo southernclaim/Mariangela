@@ -36,14 +36,16 @@
 
     <style>
         body {
-            background-color: #fffafb; /* Fundo levemente rosado/quente */
+            background:
+                radial-gradient(circle at top, rgba(255, 228, 230, 0.7), transparent 38%),
+                linear-gradient(180deg, #fffafb 0%, #fff7f8 100%);
             color: #333;
         }
 
         /* Estilo para a grade estilo Pinterest (Masonry) */
         .masonry-grid {
             column-count: 1;
-            column-gap: 1.5rem;
+            column-gap: 1.25rem;
         }
 
         @media (min-width: 640px) {
@@ -56,24 +58,26 @@
 
         .masonry-item {
             break-inside: avoid;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             position: relative;
             overflow: hidden;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border-radius: 1rem;
+            border: 1px solid rgba(159, 18, 57, 0.08);
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 25px -18px rgba(76, 5, 25, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
-        /* Efeitos de Hover nos s */
         .masonry-item:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(159, 18, 57, 0.2), 0 10px 10px -5px rgba(159, 18, 57, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 24px 45px -20px rgba(76, 5, 25, 0.28);
+            border-color: rgba(159, 18, 57, 0.2);
         }
 
         .overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(76, 5, 25, 0.9) 0%, rgba(159, 18, 57, 0.4) 50%, transparent 100%);
+            background: linear-gradient(to top, rgba(76, 5, 25, 0.82) 0%, rgba(159, 18, 57, 0.3) 40%, transparent 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
             display: flex;
@@ -109,15 +113,16 @@
             transform: translateY(0);
         }
         
-        /* Animação suave na imagem */
         .masonry-item img {
             width: 100%;
             display: block;
-            transition: transform 0.7s ease;
+            transition: transform 0.7s ease, filter 0.4s ease;
+            filter: saturate(0.92) contrast(1.02);
         }
         
         .masonry-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.04);
+            filter: saturate(1) contrast(1.04);
         }
 
         .secret-message {
@@ -129,6 +134,71 @@
         .secret-message.show {
             opacity: 1;
             pointer-events: auto;
+        }
+
+        @media (max-width: 640px) {
+            #navbar {
+                border-bottom-color: rgba(159, 18, 57, 0.12);
+            }
+
+            #navbar .h-20 {
+                height: 4.5rem;
+            }
+
+            #mariangelaTitle {
+                font-size: 2.5rem !important;
+            }
+
+            main {
+                padding-top: 5rem;
+            }
+
+            .masonry-grid {
+                column-count: 1;
+                column-gap: 0.85rem;
+            }
+
+            .masonry-item {
+                margin-bottom: 0.85rem;
+                border-radius: 1rem;
+                box-shadow: 0 12px 25px -22px rgba(76, 5, 25, 0.38);
+            }
+
+            .masonry-item img {
+                min-height: 18rem;
+                object-fit: cover;
+            }
+
+            .overlay {
+                opacity: 1;
+                inset: auto 0 0 0;
+                background: linear-gradient(to top, rgba(76, 5, 25, 0.8), rgba(76, 5, 25, 0.1) 55%, transparent 100%);
+                padding: 0.9rem 1rem 0.8rem;
+            }
+
+            .overlay-title,
+            .overlay-desc {
+                transform: none;
+                opacity: 1;
+            }
+
+            .overlay-title {
+                font-size: 1rem;
+                font-weight: 600;
+            }
+
+            .overlay-desc {
+                font-size: 0.72rem;
+            }
+
+            .secret-message .bg-white\/90 {
+                width: min(88vw, 22rem);
+                padding: 1.2rem 1rem;
+            }
+
+            .secret-message p {
+                font-size: 2.2rem !important;
+            }
         }
     </style>
 </head>
@@ -157,10 +227,13 @@
             <h1 class="text-brand text-sm md:text-base font-semibold tracking-[0.2em] uppercase mb-4">
                 Exposição
             </h1>
-            <h2 class="text-3xl md:text-4xl text-gray-800 font-light mb-6 leading-relaxed">
+            <h2 class="text-3xl md:text-4xl text-gray-800 font-light mb-4 leading-relaxed">
                 Um mergulho nas cores, sentimentos e <br class="hidden md:block">na visão de mundo através da arte.
             </h2>
-            <div class="w-16 h-0.5 bg-brand mx-auto opacity-50"></div>
+            <p class="max-w-2xl mx-auto text-sm md:text-base text-gray-600 leading-relaxed italic">
+                Fragmentos sensíveis, texturas íntimas e uma narrativa visual pensada para ser sentida em silêncio.
+            </p>
+            <div class="w-16 h-0.5 bg-brand mx-auto opacity-50 mt-6"></div>
         </section>
 
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
